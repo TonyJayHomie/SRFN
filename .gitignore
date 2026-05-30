@@ -17,7 +17,9 @@ build/
 .DS_Store
 
 # Artifacts
-*.apk
 *.aab
 *.keystore
 !debug.keystore
+# We DO ship a prebuilt debug APK for convenience.
+*.apk
+!SimWheel-debug.apk

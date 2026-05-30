@@ -1,47 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SimWheel Phone</string>
-
-    <!-- status -->
-    <string name="status_no_pc">Not connected - Discover or enter PC IP</string>
-    <string name="status_searching">Searching for PC... approve on the PC if asked</string>
-    <string name="status_ready">Ready -&gt; %1$s   (press START)</string>
-    <string name="status_streaming">● STREAMING -&gt; %1$s</string>
-    <string name="approve_hint">First time: approve this phone in the PC receiver window (type y).</string>
-
-    <!-- live readouts -->
-    <string name="lbl_pad">Pad: %1$s</string>
-    <string name="lbl_buttons">Buttons [%1$d]: %2$s</string>
-    <string name="lbl_packets">Sent: %1$d packets</string>
-    <string name="lbl_error">Send error: %1$s</string>
-    <string name="flat_warning">Hold the phone upright like a wheel</string>
-    <string name="none">none</string>
-
-    <!-- buttons -->
-    <string name="btn_start">START</string>
-    <string name="btn_stop">STOP</string>
-    <string name="btn_discover">Discover PC</string>
-    <string name="btn_connect">Use IP</string>
-    <string name="btn_calibrate">Calibrate centre</string>
-
-    <!-- connection -->
-    <string name="section_connection">Connection</string>
-    <string name="hint_ip">PC IP (e.g. 192.168.1.20)</string>
-
-    <!-- tuning -->
-    <string name="section_tuning">Steering / Output</string>
-    <string name="lbl_sensitivity">Turn sensitivity: %1$d° for full lock</string>
-    <string name="lbl_deadzone">Centre deadzone: %1$d%%</string>
-    <string name="lbl_range">PC steering range: %1$d° (match receiver)</string>
-    <string name="lbl_rate">Send rate: %1$d Hz</string>
-    <string name="switch_invert">Invert steering</string>
-    <string name="switch_swap">Swap pedals (LT/RT)</string>
-
-    <!-- toasts -->
-    <string name="toast_calibrated">Centre set</string>
-    <string name="toast_enter_ip">Enter the PC IP first</string>
-    <string name="toast_target">Target set to %1$s</string>
-    <string name="toast_found">Connected to %1$s</string>
-    <string name="toast_not_found">No PC found. Check Wi-Fi and that the receiver is running and approved.</string>
-    <string name="toast_no_target">Discover or enter the PC IP first</string>
 </resources>

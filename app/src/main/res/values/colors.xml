@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="bg">#0E1116</color>
-    <color name="teal">#1DE9B6</color>
-    <color name="teal_dark">#00897B</color>
-    <color name="warn">#FFC107</color>
-    <color name="white">#FFFFFFFF</color>
-</resources>

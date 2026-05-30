@@ -9,8 +9,40 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  # Primary path: SDK-free offline toolchain (aapt2 + android.jar + dx +
+  # signer). Works even where Google's Maven / the Android SDK are unreachable,
+  # because the app uses only the Android framework (no AndroidX).
+  build-offline:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Fetch offline build toolchain
+        run: bash tools/fetch_buildtools.sh
+
+      - name: Build signed debug APK
+        run: bash tools/build_apk.sh "$GITHUB_WORKSPACE/SimWheel-debug.apk"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: SimWheel-debug-apk
+          path: SimWheel-debug.apk
+          if-no-files-found: error
+
+  # Secondary path: a conventional Gradle/AGP build, for anyone with normal
+  # access to Google's Maven (e.g. Android Studio users). Allowed to fail in
+  # locked-down networks without failing the workflow.
+  build-gradle:
+    runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,20 +56,12 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install SDK packages
-        run: |
-          yes | sdkmanager --licenses > /dev/null || true
-          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Build debug APK
+      - name: Build debug APK with Gradle
         run: ./gradlew assembleDebug --no-daemon --stacktrace
 
-      - name: Upload APK artifact
+      - name: Upload Gradle APK
         uses: actions/upload-artifact@v4
         with:
-          name: SimWheel-debug-apk
+          name: SimWheel-debug-apk-gradle
           path: app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error
+          if-no-files-found: warn

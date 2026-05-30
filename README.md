@@ -24,31 +24,40 @@ write-up is in [`docs/PROTOCOL.md`](docs/PROTOCOL.md).
 
 ## Get the APK
 
-This project is set up to build the APK automatically with **GitHub Actions**
-(the build needs the Android SDK + Google's Maven, which aren't available in the
-environment where the code was generated — so CI does the compile).
+A prebuilt, signed, installable debug APK is checked into the repo:
+**[`SimWheel-debug.apk`](SimWheel-debug.apk)** (minSdk 26 / Android 8+).
+Copy it to your phone and tap to install (allow "install unknown apps").
 
-1. Push this repo to GitHub (branch `claude/optimistic-euler-scXJS` already has
-   it). The workflow [`.github/workflows/android.yml`](.github/workflows/android.yml)
-   runs on every push.
-2. Open the repo's **Actions** tab → the latest **Build SimWheel APK** run.
-3. Download the **`SimWheel-debug-apk`** artifact → unzip → `app-debug.apk`.
-4. Copy it to your phone and install (allow "install unknown apps").
-   You can also trigger a build manually via **Run workflow**.
+Three ways to (re)build it:
 
-### Or build it yourself
+### 1. SDK-free offline build (no Android Studio, no Google Maven)
 
-Open the project in **Android Studio** (Giraffe or newer) and let it sync, then
-**Build → Build APK(s)**. Or from a terminal with the Android SDK installed
-(`ANDROID_HOME` set, or a `local.properties` with `sdk.dir=...`):
+The app uses **only the Android framework** (no AndroidX), so it builds with a
+tiny toolchain — `aapt2` + `android.jar` + `javac` + `dx` + a signer — none of
+which come from Google's Maven. Handy on locked-down networks.
+
+```bash
+bash tools/fetch_buildtools.sh   # downloads the toolchain to /tmp/apkbuild
+bash tools/build_apk.sh          # -> ./SimWheel-debug.apk
+```
+
+### 2. GitHub Actions
+
+[`.github/workflows/android.yml`](.github/workflows/android.yml) runs on every
+push. The **build-offline** job uses the toolchain above and always produces an
+artifact; **Actions tab → latest run → `SimWheel-debug-apk`**.
+
+### 3. Android Studio / Gradle
+
+Open the project in **Android Studio** and **Build → Build APK(s)**, or:
 
 ```bash
 ./gradlew assembleDebug
 # output: app/build/outputs/apk/debug/app-debug.apk
 ```
 
-Toolchain: AGP 8.5.2 · Gradle 8.9 · Kotlin 1.9.24 · JDK 17 · minSdk 26 ·
-compileSdk 34.
+Toolchain: pure Java (no Kotlin, no AndroidX) · AGP 8.5.2 · Gradle 8.9 ·
+JDK 17 · minSdk 26 · compileSdk 34.
 
 ---
 
@@ -129,13 +138,18 @@ All settings persist between launches.
 ## Repo layout
 
 ```
-app/                       Android app (Kotlin)
+SimWheel-debug.apk         prebuilt signed debug APK
+app/                       Android app (pure Java, no AndroidX)
   src/main/java/com/srfn/simwheel/
-    MainActivity.kt        UI, lifecycle, gamepad event capture
-    SteeringSensor.kt      gyro/gravity -> normalised steering
-    GamepadManager.kt      analog triggers + buttons from the controller
-    SimWheelClient.kt      UDP + JSON: discovery + telemetry (port 4567)
-  src/main/res/            layout, strings, theme, launcher icon
+    MainActivity.java      UI (built in code), lifecycle, gamepad capture
+    SteeringSensor.java    gyro/gravity -> normalised steering
+    GamepadManager.java    analog triggers + buttons from the controller
+    SimWheelClient.java    UDP + JSON: discovery + telemetry (port 4567)
+    Controls.java          immutable control snapshot
+  src/main/res/            strings + launcher icon
+tools/
+  fetch_buildtools.sh      download the SDK-free toolchain
+  build_apk.sh             build a signed APK without the Android SDK
 docs/PROTOCOL.md           reverse-engineered receiver protocol
-.github/workflows/         CI that builds the APK
+.github/workflows/         CI that builds the APK (offline + Gradle)
 ```
