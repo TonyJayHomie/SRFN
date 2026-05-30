@@ -1,0 +1,23 @@
+# Reverse-engineering reference material (not part of the app)
+/receiver_upload.zip
+/receiver_src/
+
+# Android / Gradle build output
+.gradle/
+build/
+**/build/
+/local.properties
+/captures
+.externalNativeBuild
+.cxx/
+
+# IDE
+*.iml
+/.idea/
+.DS_Store
+
+# Artifacts
+*.apk
+*.aab
+*.keystore
+!debug.keystore

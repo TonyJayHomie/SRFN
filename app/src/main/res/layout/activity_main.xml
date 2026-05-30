@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="2"
+    android:padding="10dp">
+
+    <!-- ============ LEFT: live telemetry + start/stop ============ -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/statusText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="@string/status_no_pc" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="11sp"
+                android:alpha="0.7"
+                android:text="@string/approve_hint" />
+
+            <TextView
+                android:id="@+id/deviceText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                android:text="@string/lbl_pad" />
+
+            <TextView
+                android:id="@+id/steerValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:text="Steer" />
+
+            <ProgressBar
+                android:id="@+id/steerBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="200"
+                android:progress="100" />
+
+            <TextView
+                android:id="@+id/throttleValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textSize="14sp"
+                android:text="Throttle" />
+
+            <ProgressBar
+                android:id="@+id/throttleBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/brakeValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textSize="14sp"
+                android:text="Brake" />
+
+            <ProgressBar
+                android:id="@+id/brakeBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/buttonsValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                android:text="Buttons" />
+
+            <TextView
+                android:id="@+id/flatWarning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/warn"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:text="@string/flat_warning" />
+
+            <TextView
+                android:id="@+id/packetsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textSize="11sp"
+                android:alpha="0.7"
+                android:text="@string/lbl_packets" />
+
+            <Button
+                android:id="@+id/startButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:minHeight="56dp"
+                android:textSize="18sp"
+                android:text="@string/btn_start" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ============ RIGHT: connection + tuning ============ -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textColor="@color/teal"
+                android:textSize="12sp"
+                android:text="@string/section_connection" />
+
+            <EditText
+                android:id="@+id/ipInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:hint="@string/hint_ip"
+                android:importantForAutofill="no" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <Button
+                    android:id="@+id/discoverButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/btn_discover" />
+
+                <Button
+                    android:id="@+id/connectButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/btn_connect" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/calibrateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/btn_calibrate" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textColor="@color/teal"
+                android:textSize="12sp"
+                android:text="@string/section_tuning" />
+
+            <TextView
+                android:id="@+id/sensitivityLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:text="@string/lbl_sensitivity" />
+
+            <SeekBar
+                android:id="@+id/sensitivitySeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="160" />
+
+            <TextView
+                android:id="@+id/deadzoneLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:text="@string/lbl_deadzone" />
+
+            <SeekBar
+                android:id="@+id/deadzoneSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="30" />
+
+            <TextView
+                android:id="@+id/rangeLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:text="@string/lbl_range" />
+
+            <SeekBar
+                android:id="@+id/rangeSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="2430" />
+
+            <TextView
+                android:id="@+id/rateLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:text="@string/lbl_rate" />
+
+            <SeekBar
+                android:id="@+id/rateSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="110" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/invertSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/switch_invert" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/swapSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/switch_swap" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
